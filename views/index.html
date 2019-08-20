@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comment</title>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css">
+    <link href="/static/mycss/base.css" rel="stylesheet">
+</head>
+<body>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column" id="wrap-form-comment">
+        <h1 > 评论系统</h1>
+        <div class="well" id="form-comment">
+            <h4>欢迎留下您的评论：</h4>
+            <form role="form" action="" method="post">
+                <input id="id_object_pk" type="hidden" name="object_pk" value="25" />
+                <input id="id_reply_pk" type="hidden" name="reply_pk" value="0" />
+                <input id="id_reply_fk" type="hidden" name="reply_fk" value="0" />
+                <textarea id="comment_content" class="comment_content form-control" name="comment_content"></textarea>
+                <button id="comment_submit" type="submit" class="btn btn-primary" data-islogin="true">提交评论</button>
+            </form>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column" id="wrap-comments-list">
+            <div id="comments-list">
+                <div class="comments_one col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                    <div class="comment_parent col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                        <a class="pull-left">
+                            <img class="media-object" src="../static/image/default/user-default-60x60.png" height="45" width="45" alt="">
+                        </a>
+                        <div class="media-body" id="comment-14">
+                            <h6 class="media-heading">long
+
+                                <small>19-05-22 16:41</small>
+                                <small class="reply_btn">
+                                    <a href="#" data-comment-id="14"
+                                       data-parent-id="14" class="comment_reply_link">回复</a>
+                                </small>
+                            </h6>
+                            <p>厉害，博主可否告诉QQ号，向你学习go</p>
+                        </div>
+
+                        <div class="comment_child col-lg-11 col-md-11 col-sm-11 col-xs-11 column">
+                            <a class="pull-left">
+                                <img class="media-object" src="../static/image/default/user-default-60x60.png" height="30" width="30" alt="">
+                            </a>
+                            <div class="media-body" id="comment-15">
+                                <h6 class="media-heading">icode
+                                    <span class="btn btn-info btn-xs">官方</span>
+                                    <small>19-05-27 11:24</small>
+                                    <small class="reply_btn">
+                                        <a href="#" data-comment-id="15"
+                                           data-parent-id="14" class="comment_reply_link">回复</a>
+                                    </small>
+                                </h6>
+                                <small class="comment-quote">
+                                    引用 网友
+                                    long：厉害，博主可否告诉QQ号，向你学习go</small>
+                                <p>948510543 可以加我的这个交流群</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comments_one col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                    <div class="comment_parent col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                        <a class="pull-left">
+                            <img class="media-object" src="../static/image/default/user-default-60x60.png" height="45" width="45" alt="">
+                        </a>
+                        <div class="media-body" id="comment-14">
+                            <h6 class="media-heading">long
+                                <small>19-05-22 16:41</small>
+                                <small class="reply_btn">
+                                    <a href="#" data-comment-id="14"
+                                       data-parent-id="14" class="comment_reply_link">回复</a>
+                                </small>
+                            </h6>
+                            <p>厉害，博主可否告诉QQ号，向你学习go</p>
+                        </div>
+
+                        <div class="comment_child col-lg-11 col-md-11 col-sm-11 col-xs-11 column">
+                            <a class="pull-left">
+                                <img class="media-object" src="../static/image/default/user-default-60x60.png" height="30" width="30" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

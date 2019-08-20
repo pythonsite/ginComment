@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Comment | Log in</title>
+
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="/static/libs/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/static/libs/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/static/libs/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/static/libs/AdminLTE/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/static/libs/iCheck/square/blue.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/"><b>Comments</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+{{/*        {{if not .message}}*/}}
+{{/*            <p class="login-box-msg">Sign in to start your session</p>*/}}
+{{/*        {{else}}*/}}
+{{/*            <p class="login-box-msg text-danger">{{.message}}</p>*/}}
+{{/*        {{end}}*/}}
+
+        <form action="/login" method="post">
+            <div class="form-group has-feedback">
+                <input type="email" name="username" class="form-control" placeholder="Email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <a href="/auth/github" class="btn btn-block  btn-primary btn-github btn-flat"> GitHub登录</a>
+        </div>
+        <!-- /.social-auth-links -->
+        <a href="/signup" class="text-center">注册新用户</a>
+
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="/static/libs/jquery/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/static/libs/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>
