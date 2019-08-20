@@ -21,8 +21,10 @@ func main() {
 	router.LoadHTMLGlob(filepath.Join(getCurrentDirectory(), "./views/*"))
 
 	router.Static("/static", filepath.Join(getCurrentDirectory(), "./static"))
+	router.GET("/", controllers.IndexGet)
 	router.GET("/login",controllers.LoginGet)
-	router.POST("/login",)
+	router.POST("/login",controllers.LoginPost)
+
 	err := router.Run(models.Conf.General.Addr)
 	if err != nil {
 		log.Fatal(err)

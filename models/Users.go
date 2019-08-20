@@ -26,8 +26,8 @@ func GetUser(id interface{})(*User, error) {
 }
 
 func GetUserByUserName(userName string)(*User, error) {
-	var user = new(User)
-	err := DB.First(user, "email=?",userName).Error
-	return user,err
+	var user User
+	err := DB.First(&user, "email=?",userName).Error
+	return &user,err
 }
 

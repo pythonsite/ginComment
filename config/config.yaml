@@ -1,7 +1,7 @@
 runmode: debug
 general:
         addr: :9090
-        dsn: root:123456@(192.168.188.106:3306)/Comment?charset=utf8&parseTime=True
+        dsn: root:123456@(10.211.55.6:3306)/Comment?charset=utf8&parseTime=True
         sessionsecret: comments
         signupenabled: true
 

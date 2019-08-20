@@ -4,6 +4,7 @@ import (
 	"ginComment/models"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
@@ -24,11 +25,17 @@ func LoginPost(c *gin.Context) {
 		})
 		return
 	}
+	log.Println(username)
 	user, err = models.GetUserByUserName(username)
+	log.Printf("%v", user)
+	log.Println(user.Password)
+	log.Println(password)
 	if err != nil || user.Password != password {
+		log.Println("invalid username or password")
 		c.HTML(http.StatusOK, "login.html", gin.H{
 			"message": "invalid username or password",
 		})
+		return
 	}
 	if user.LockState {
 		c.HTML(http.StatusOK, "login.html", gin.H{
