@@ -9,8 +9,57 @@
     <link href="/static/mycss/base.css" rel="stylesheet">
 </head>
 <body>
+<div class="row clearfix">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <div id="logo"><a href="/"></a></div>
+            <button type="button" id="phonenavbar" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">导航条</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {{if .user}}
+                <ul class="nav navbar-nav navbar-right" style="padding-right: 45%;">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> 退出登录</a></li>
+                </ul>
+            {{else}}
+                <ul class="nav navbar-nav navbar-right" style="padding-right: 55%;">
+                    <li><a href="#" data-toggle="modal" data-target="#wy-register-modal">
+                            <span class="glyphicon glyphicon-new-window"></span> 注册</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login" data-toggle="modal" data-target="#wy-login-modal">
+                            <span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                </ul>
+            {{end}}
+        </div>
+    </nav>
+</div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column" id="wrap-form-comment">
-        <h1 > 评论系统</h1>
+        <h1>Hello Golang</h1>
+        <p>hello golang golang golang</p>
+        <p>hello golang golang golang</p>
+        <p>hello golang golang golang</p>
+        <p>hello golang golang golang</p><p>hello golang golang golang</p>
+        <p>hello golang golang golang</p>
+        <p>hello golang golang golang</p>
+        <p>hello golang golang golang</p>
+
+
+
+
+        {{if not .user}}
+            <p class="checklogin col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                如需留言，请
+                <a href="#" data-toggle="modal" data-target="#wy-login-modal">
+                    <span class="glyphicon glyphicon-log-in"></span> 登录</a>，没有账号？请
+                <a href="#" data-toggle="modal" data-target="#wy-register-modal">
+                    <span class="glyphicon glyphicon-new-window"></span> 注册</a>
+            </p>
+        {{else}}
         <div class="well" id="form-comment">
             <h4>欢迎留下您的评论：</h4>
             <form role="form" action="" method="post">
@@ -21,6 +70,7 @@
                 <button id="comment_submit" type="submit" class="btn btn-primary" data-islogin="true">提交评论</button>
             </form>
         </div>
+        {{end}}
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column" id="wrap-comments-list">
             <div id="comments-list">
                 <div class="comments_one col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
@@ -80,6 +130,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </body>
 </html>

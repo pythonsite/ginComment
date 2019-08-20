@@ -48,7 +48,7 @@ func InitDB()(err error) {
 	if err == nil {
 		log.Println("connect db success")
 		DB = db
-		DB.AutoMigrate(&User{}, &Comment{})
+		DB.AutoMigrate(&User{}, &Comment{},&Post{})
 	}
 	return
 }
