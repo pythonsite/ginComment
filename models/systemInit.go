@@ -48,7 +48,9 @@ func InitDB()(err error) {
 	if err == nil {
 		log.Println("connect db success")
 		DB = db
+		DB.LogMode(true)
 		DB.AutoMigrate(&User{}, &Comment{},&Post{})
+		DB.Model(&Comment{}).Related(&Post{})
 	}
 	return
 }

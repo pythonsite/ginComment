@@ -8,6 +8,8 @@ import (
 
 func IndexGet(c *gin.Context) {
 	user, _ := c.Get(models.CONTEXT_USER_KEY)
+	 _ = models.GetPostComments()
+	models.GetCommentListMap()
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"user":user,
 	})
