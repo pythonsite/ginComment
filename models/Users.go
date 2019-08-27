@@ -6,11 +6,9 @@ type User struct {
 	gorm.Model
 	Email string `gorm:unique_index;default:null`
 	Telephone string `gorm:"unique_index;defautl:null"`
-	Password string `ogrm:default:null`
-	GithubLoginId string `gorm:unique_index;default:null`
-	GithubUrl string
+	Password string `gorm:"default:null"`
 	IsAdmin bool
-	AvatarUrl string
+	AvatarUrl string `gorm:"default:'/static/upload/default/user-default-60x60.png'"`
 	NickName string
 	LockState bool `gorm:"default:'0'"`
 }

@@ -3,14 +3,15 @@ package models
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
+	"log"
 )
 
 type Comment struct {
 	gorm.Model
-	PostID int	`gorm:"index:idx_post_id"`
+	PostID uint	`gorm:"index:idx_post_id"`
+	UserID uint  `gorm:"index:idx_user_id"`
 	ReplyPk int `gorm:"index:idx_reply_pk"`  // 一级评论
 	ReplyFk int `gorm:"index:idx_reply_fk"`  // 针对一级评论的回复
-	User User `gorm:"foreignkey:ID;association_foreignkey:user_id;auto_preload"`
 	Content string  `gorm:"type:text"`
 	NickName string `gorm:"-"`
 	AvatarUrl string `gorm:"-"`
@@ -23,6 +24,7 @@ func (comment *Comment) Insert()error {
 
 func GetPostComments() (count int) {
 	DB.Model(&Comment{}).Where("post_id = ?",1).Where("reply_pk=?",0).Count(&count)
+	log.Println(count)
 	return
 }
 
@@ -33,35 +35,63 @@ func GetPostCommentsCount()(count int64) {
 
 func GetPostCommentUserCount()(count int64) {
 	var comment = Comment{}
-	var u User
-	DB.Model(&u).Where("id=?",)
-	DB.Model(&comment).Where("post_id=?",1).Group("user.").Count(&count)
+	DB.Model(&comment).Where("post_id=?",1).Group("user_id").Count(&count)
 	return
 }
 
-func GetCommentListMap() {
+func GetOneCommentALL(num uint)(commentlist []*Comment,err error) {
+
+	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.post_id = ? and c.reply_pk=? order by created_at desc",1,num).Rows()
+	//rows,err := DB.Model(&Comment{}).Where("post_id=?",1).Where("reply_pk=?",num).Order("created_at desc").Rows()
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var comment Comment
+		DB.ScanRows(rows, &comment)
+		commentlist = append(commentlist, &comment)
+	}
+	//fmt.Printf("%#v\n",commentlist)
+	return
+}
+
+func GetTwoCommentALL(num uint)(commentlist []*Comment,err error) {
+	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.reply_fk = ? order by created_at desc", num).Rows()
+	//rows,err := DB.Model(&Comment{}).Where("reply_fk=?",num).Order("created_at desc").Rows()
+	if err != nil {
+		return
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var comment Comment
+		DB.ScanRows(rows, &comment)
+		commentlist = append(commentlist, &comment)
+	}
+	//fmt.Printf("%#v\n",commentlist)
+	return
+}
+
+func GetCommentListMap() (commentListMap []commentListMap,err error){
 	var commentlist0 []*Comment
 	var commentlist []*Comment
 	type CommentlistMap struct {
 		Commentlist0 *Comment
 		Commentlist []*Comment
 	}
-	var commentListMap []CommentlistMap
-	DB.Model(&Comment{}).Where("post_id",1).Where("reply_pk",0).Order("created_at desc").Find(&commentlist0)
-	for _, v:= range commentlist0 {
-		DB.Model(&Comment{}).Where("reply_fk",v.ID).Order("created_at").Find(&commentlist)
+	var num uint = 0
+	commentlist0, err = GetOneCommentALL(num)
+	if err != nil {
+		return
+	}
+
+	for _, v := range commentlist0 {
+		commentlist,err = GetTwoCommentALL(v.ID)
 		var item = CommentlistMap{}
 		item.Commentlist0 = v
 		item.Commentlist = commentlist
 		commentListMap = append(commentListMap, item)
 		commentlist = []*Comment{}
 	}
-	var commentlength int64
-	var commentuser int64
-	commentlength = GetPostCommentsCount()
-	commentuser = GetPostCommentUserCount()
-	fmt.Println("---------------")
-	fmt.Println(commentListMap)
-	fmt.Println(commentlength)
-	fmt.Println(commentuser)
+	return
 }
