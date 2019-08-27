@@ -42,7 +42,6 @@ func GetPostCommentUserCount()(count int64) {
 func GetOneCommentALL(num uint)(commentlist []*Comment,err error) {
 
 	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.post_id = ? and c.reply_pk=? order by created_at desc",1,num).Rows()
-	//rows,err := DB.Model(&Comment{}).Where("post_id=?",1).Where("reply_pk=?",num).Order("created_at desc").Rows()
 	if err != nil {
 		return
 	}
@@ -58,7 +57,6 @@ func GetOneCommentALL(num uint)(commentlist []*Comment,err error) {
 
 func GetTwoCommentALL(num uint)(commentlist []*Comment,err error) {
 	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.reply_fk = ? order by created_at desc", num).Rows()
-	//rows,err := DB.Model(&Comment{}).Where("reply_fk=?",num).Order("created_at desc").Rows()
 	if err != nil {
 		return
 	}
@@ -68,23 +66,23 @@ func GetTwoCommentALL(num uint)(commentlist []*Comment,err error) {
 		DB.ScanRows(rows, &comment)
 		commentlist = append(commentlist, &comment)
 	}
-	//fmt.Printf("%#v\n",commentlist)
 	return
 }
 
-func GetCommentListMap() (commentListMap []commentListMap,err error){
+
+
+type CommentlistMap struct {
+	Commentlist0 *Comment
+	Commentlist []*Comment
+}
+func GetCommentListMap() (commentListMap []CommentlistMap,err error){
 	var commentlist0 []*Comment
 	var commentlist []*Comment
-	type CommentlistMap struct {
-		Commentlist0 *Comment
-		Commentlist []*Comment
-	}
 	var num uint = 0
 	commentlist0, err = GetOneCommentALL(num)
 	if err != nil {
 		return
 	}
-
 	for _, v := range commentlist0 {
 		commentlist,err = GetTwoCommentALL(v.ID)
 		var item = CommentlistMap{}
@@ -93,5 +91,6 @@ func GetCommentListMap() (commentListMap []commentListMap,err error){
 		commentListMap = append(commentListMap, item)
 		commentlist = []*Comment{}
 	}
+	fmt.Println(commentListMap)
 	return
 }

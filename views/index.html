@@ -71,15 +71,20 @@
             </form>
         </div>
         {{end}}
+        <!-- Comments List -->
+        <div id="comments-head" class="comments_length col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+            <p>{{.commentlength}} 条评论 {{.commentuser}} 人参与</p>
+        </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column" id="wrap-comments-list">
             <div id="comments-list">
+                {{ range $key,$item := .commentlistmap}}
                 <div class="comments_one col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
                     <div class="comment_parent col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
                         <a class="pull-left">
-                            <img class="media-object" src="../static/image/default/user-default-60x60.png" height="45" width="45" alt="">
+                            <img class="media-object" src="{{ $item.Commentlist0.AvatarUrl }}"  height="45" width="45" alt="">
                         </a>
                         <div class="media-body" id="comment-14">
-                            <h6 class="media-heading">long
+                            <h6 class="media-heading">{{ $item.Commentlist0.NickName }}
 
                                 <small>19-05-22 16:41</small>
                                 <small class="reply_btn">
@@ -111,23 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="comments_one col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
-                    <div class="comment_parent col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
-                        <a class="pull-left">
-                            <img class="media-object" src="../static/image/default/user-default-60x60.png" height="45" width="45" alt="">
-                        </a>
-                        <div class="media-body" id="comment-14">
-                            <h6 class="media-heading">long
-                                <small>19-05-22 16:41</small>
-                                <small class="reply_btn">
-                                    <a href="#" data-comment-id="14"
-                                       data-parent-id="14" class="comment_reply_link">回复</a>
-                                </small>
-                            </h6>
-                            <p>厉害，博主可否告诉QQ号，向你学习go</p>
-                        </div>
-                    </div>
-                </div>
+                {{end}}
             </div>
         </div>
 
