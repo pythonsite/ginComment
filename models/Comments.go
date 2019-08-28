@@ -40,8 +40,7 @@ func GetPostCommentUserCount()(count int64) {
 }
 
 func GetOneCommentALL(num uint)(commentlist []*Comment,err error) {
-
-	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.post_id = ? and c.reply_pk=? order by created_at desc",1,num).Rows()
+	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.post_id = ? and c.reply_pk=?",1,num).Rows()
 	if err != nil {
 		return
 	}
@@ -51,12 +50,12 @@ func GetOneCommentALL(num uint)(commentlist []*Comment,err error) {
 		DB.ScanRows(rows, &comment)
 		commentlist = append(commentlist, &comment)
 	}
-	//fmt.Printf("%#v\n",commentlist)
+	fmt.Printf("一级评论：%#v\n",commentlist)
 	return
 }
 
 func GetTwoCommentALL(num uint)(commentlist []*Comment,err error) {
-	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.reply_fk = ? order by created_at desc", num).Rows()
+	rows, err := DB.Raw("select c.*, u.* from comments c inner join users u on c.user_id = u.id where c.reply_fk = ?", num).Rows()
 	if err != nil {
 		return
 	}
@@ -66,6 +65,7 @@ func GetTwoCommentALL(num uint)(commentlist []*Comment,err error) {
 		DB.ScanRows(rows, &comment)
 		commentlist = append(commentlist, &comment)
 	}
+	fmt.Printf("二级评论：%#v\n",commentlist)
 	return
 }
 

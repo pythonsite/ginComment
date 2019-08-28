@@ -8,7 +8,7 @@ type User struct {
 	Telephone string `gorm:"unique_index;defautl:null"`
 	Password string `gorm:"default:null"`
 	IsAdmin bool
-	AvatarUrl string `gorm:"default:'/static/upload/default/user-default-60x60.png'"`
+	AvatarUrl string `gorm:"default:'/static/image/default/user-default-60x60.png'"`
 	NickName string
 	LockState bool `gorm:"default:'0'"`
 }
