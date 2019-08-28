@@ -8,6 +8,7 @@ import (
 
 type Comment struct {
 	gorm.Model
+	User User `gorm:"foreignkey:'UserID'"`
 	PostID uint	`gorm:"index:idx_post_id"`
 	UserID uint  `gorm:"index:idx_user_id"`
 	ReplyPk int `gorm:"index:idx_reply_pk"`  // 一级评论
@@ -93,4 +94,23 @@ func GetCommentListMap() (commentListMap []CommentlistMap,err error){
 	}
 	fmt.Println(commentListMap)
 	return
+}
+
+func (comment *Comment)ReturnPkID(key int) (int) {
+	var replyPk Comment
+	DB.Raw("select c.* from comments c inner join users u on c.user_id = u.id where c.id = ? limit 1", key).Scan(&replyPk)
+	return int(replyPk.UserID)
+}
+
+func (comment *Comment)ReturnPkContent(key int)(string) {
+	var replyPk Comment
+	DB.Raw("select c.* from comments c inner join users u on c.user_id = u.id where c.id = ? limit 1", key).Scan(&replyPk)
+	return replyPk.Content
+}
+
+func (comment *Comment) ReturnPKName(key int)(string) {
+	var replyPk Comment
+	DB.Raw("select c.* from comments c inner join users u on c.user_id = u.id where c.id = ? limit 1", key).Scan(&replyPk)
+	fmt.Printf("%#v\n", replyPk)
+	return replyPk.User.NickName
 }

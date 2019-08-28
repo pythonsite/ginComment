@@ -50,7 +50,6 @@
 
 
 
-
         {{if not .user}}
             <p class="checklogin col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
                 如需留言，请
@@ -83,37 +82,49 @@
                         <a class="pull-left">
                             <img class="media-object" src="{{ $item.Commentlist0.AvatarUrl }}"  height="45" width="45" alt="">
                         </a>
-                        <div class="media-body" id="comment-14">
+                        <div class="media-body" id="comment-{{$item.Commentlist0.ID}}">
                             <h6 class="media-heading">{{ $item.Commentlist0.NickName }}
-
-                                <small>19-05-22 16:41</small>
+                                {{ if eq $item.Commentlist0.UserID 1 }}
+                                    <span class="btn btn-info btn-xs">官方</span>
+                                {{end}}
+                                <small>{{dateFormat $item.Commentlist0.CreatedAt "2006-01-02 15:04"}}</small>
+                                {{ if  $.user }}
                                 <small class="reply_btn">
-                                    <a href="#" data-comment-id="14"
-                                       data-parent-id="14" class="comment_reply_link">回复</a>
+                                    <a href="#" data-comment-id="{{ $item.Commentlist0.ID }}"
+                                       data-parent-id="{{$item.Commentlist0.ID}}" class="comment_reply_link">回复</a>
                                 </small>
+                                {{ end }}
                             </h6>
-                            <p>厉害，博主可否告诉QQ号，向你学习go</p>
+                            <p>{{ $item.Commentlist0.Content }}</p>
                         </div>
-
+                        {{range $k, $v := $item.Commentlist }}
                         <div class="comment_child col-lg-11 col-md-11 col-sm-11 col-xs-11 column">
                             <a class="pull-left">
-                                <img class="media-object" src="../static/image/default/user-default-60x60.png" height="30" width="30" alt="">
+                                <img class="media-object" src="{{ $v.User.AvatarUrl }}" height="30" width="30" alt="">
                             </a>
-                            <div class="media-body" id="comment-15">
-                                <h6 class="media-heading">icode
-                                    <span class="btn btn-info btn-xs">官方</span>
-                                    <small>19-05-27 11:24</small>
-                                    <small class="reply_btn">
-                                        <a href="#" data-comment-id="15"
-                                           data-parent-id="14" class="comment_reply_link">回复</a>
-                                    </small>
+
+                            <div class="media-body" id="comment-{{ $v.ID }}">
+                                <h6 class="media-heading">{{ $v.NickName }}
+                                    {{ if eq $item.Commentlist0.UserID 1 }}
+                                        <span class="btn btn-info btn-xs">官方</span>
+                                    {{end}}
+                                    <small>{{dateFormat $item.Commentlist0.CreatedAt "2006-01-02 15:04"}}</small>
+                                    {{ if  $.user }}
+                                        <small class="reply_btn">
+                                            <a href="#" data-comment-id="{{ $item.Commentlist0.ID }}"
+                                               data-parent-id="{{$item.Commentlist0.ID}}" class="comment_reply_link">回复</a>
+                                        </small>
+                                    {{ end }}
                                 </h6>
+                                {{$reply_pk_userid :=  $v.ReturnPkID $v.ReplyPk}}
                                 <small class="comment-quote">
-                                    引用 网友
-                                    long：厉害，博主可否告诉QQ号，向你学习go</small>
-                                <p>948510543 可以加我的这个交流群</p>
+                                    {{ if eq $reply_pk_userid 1}}引用 官方 {{else}}引用 网友 {{end}}
+                                    {{  $v.ReturnPKName $v.ReplyPk }}：{{ $v.ReturnPkContent  $v.ReplyPk }}
+                                </small>
+                                <p>{{ $v.Content }}</p>
                             </div>
                         </div>
+                        {{ end }}
                     </div>
                 </div>
                 {{end}}

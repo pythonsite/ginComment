@@ -4,9 +4,11 @@ import (
 	"ginComment/controllers"
 	"ginComment/models"
 	_ "ginComment/models"
+	"ginComment/utils"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"log"
 	"os"
 	"path/filepath"
@@ -18,7 +20,7 @@ func main() {
 	router := gin.Default()
 	setSessions(router)
 	router.Use(ShareData())
-	router.LoadHTMLGlob(filepath.Join(getCurrentDirectory(), "./views/*"))
+	setTemplate(router)
 
 	router.Static("/static", filepath.Join(getCurrentDirectory(), "./static"))
 	router.GET("/", controllers.IndexGet)
@@ -60,4 +62,12 @@ func getCurrentDirectory() string {
 		log.Fatal(err)
 	}
 	return strings.Replace(dir,"\\", "/", -1)
+}
+
+func setTemplate(engine *gin.Engine) {
+	funcMap := template.FuncMap{
+		"dateFormat": utils.DateFormat,
+	}
+	engine.SetFuncMap(funcMap)
+	engine.LoadHTMLGlob(filepath.Join(getCurrentDirectory(), "./views/*"))
 }
