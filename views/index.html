@@ -61,8 +61,8 @@
         {{else}}
         <div class="well" id="form-comment">
             <h4>欢迎留下您的评论：</h4>
-            <form role="form" action="" method="post">
-                <input id="id_object_pk" type="hidden" name="object_pk" value="25" />
+            <form role="form" action="/admin/comments/add" method="post">
+                <input id="id_object_pk" type="hidden" name="post_id" value="1" />
                 <input id="id_reply_pk" type="hidden" name="reply_pk" value="0" />
                 <input id="id_reply_fk" type="hidden" name="reply_fk" value="0" />
                 <textarea id="comment_content" class="comment_content form-control" name="comment_content"></textarea>
@@ -100,12 +100,12 @@
                         {{range $k, $v := $item.Commentlist }}
                         <div class="comment_child col-lg-11 col-md-11 col-sm-11 col-xs-11 column">
                             <a class="pull-left">
-                                <img class="media-object" src="{{ $v.User.AvatarUrl }}" height="30" width="30" alt="">
+                                <img class="media-object" src="{{ $v.AvatarUrl }}" height="30" width="30" alt="">
                             </a>
 
                             <div class="media-body" id="comment-{{ $v.ID }}">
                                 <h6 class="media-heading">{{ $v.NickName }}
-                                    {{ if eq $item.Commentlist0.UserID 1 }}
+                                    {{ if eq $v.UserID 1 }}
                                         <span class="btn btn-info btn-xs">官方</span>
                                     {{end}}
                                     <small>{{dateFormat $item.Commentlist0.CreatedAt "2006-01-02 15:04"}}</small>
@@ -130,8 +130,6 @@
                 {{end}}
             </div>
         </div>
-
-
     </div>
 </body>
 </html>
